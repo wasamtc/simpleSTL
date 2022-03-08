@@ -70,6 +70,7 @@ freelist的节点结构很特殊，因为freelist总共有16个，每一个的�
 内存池就是本身拿数据，能拿多少拿多少，要是没有就先把剩下的放到合适的freelist去，再从堆里面拿数据，要是堆里面也拿不出数据了（注意这里其实从堆里面要拿的数据是远多于要的数据的），那就看大的freelist里面还有没有东西，有的话就拿出来急用，连大的freelist都没数据了，那就调用第一级配置器吧，看看第一级配置器的处理内存不够的处理机制能不能有点作用。
 
 参考：
+
 [SGI STL中的空间配置器（Allocator）图文详解](https://blog.csdn.net/weixin_44277699/article/details/105799463?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2.queryctrv4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2.queryctrv4&utm_relevant_index=5)
 
 [STL 空间配置器篇](https://wonanut.blog.csdn.net/article/details/82915529?spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-16.queryctrv4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-16.queryctrv4&utm_relevant_index=22)
