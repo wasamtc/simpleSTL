@@ -70,6 +70,8 @@ __STL_NULL_TMPL_ARGS：这个可以直接理解为<>，说是为了绑定友元�
 
 __STL_TEMPLATE_NULL：定义了template<>，也就是定义了一种特化的格式（感觉这个有点偏向于全特化）
 
+PS：这几个组态蛮重要的，主要后面经常用到这几个组态相关的东西
+
 参考：
 
 [STL学习笔记（0）可能困惑的C++语法](https://blog.csdn.net/RaKiRaKiRa/article/details/82997891)
