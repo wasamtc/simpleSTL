@@ -61,21 +61,13 @@ PS：其实我还有一个问题，就是怎么调用那个构造和析构函数
 
 freelist的节点结构很特殊，因为freelist总共有16个，每一个的每个区块大小不同，每一个区块应该有一个节点来指向下一个节点，但是如果我们用单纯的指针的话这个空间就浪费了（即只用作指向下一个节点），所以这里节点用了union类型，即可看作指针，在具体分配出去后又可以存储实际的数据。freelist的接口大致如下：
 
-![Screenshot_20220308_191741_com.newskyer.draw](https://img-blog.csdnimg.cn/0108424cca3c4bb398f739806195b59f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAd2FzYW10Yw==,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center)
+![Screenshot_20220308_191741_com.newskyer.draw](C:\Users\q1369\Documents\Tencent Files\2930848926\FileRecv\MobileFile\Screenshot_20220308_191741_com.newskyer.draw.png)
 
 （画得有点丑）
 
 然后第二级配置器__default_alloc_template本身代码没啥好说的，释放内存不用说了，分配内存就是找到一个freelist就行，找不到就调用refill，refill找chunk_alloc。
 
 内存池就是本身拿数据，能拿多少拿多少，要是没有就先把剩下的放到合适的freelist去，再从堆里面拿数据，要是堆里面也拿不出数据了（注意这里其实从堆里面要拿的数据是远多于要的数据的），那就看大的freelist里面还有没有东西，有的话就拿出来急用，连大的freelist都没数据了，那就调用第一级配置器吧，看看第一级配置器的处理内存不够的处理机制能不能有点作用。
-
-参考：
-
-[SGI STL中的空间配置器（Allocator）图文详解](https://blog.csdn.net/weixin_44277699/article/details/105799463?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2.queryctrv4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2.queryctrv4&utm_relevant_index=5)
-
-[STL 空间配置器篇](https://wonanut.blog.csdn.net/article/details/82915529?spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-16.queryctrv4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-16.queryctrv4&utm_relevant_index=22)
-
-[STL源码剖析 — 空间配置器(allocator)](https://www.cnblogs.com/mangoyuan/p/6481556.html)
 
 ## 四.内存基本处理工具
 
@@ -102,6 +94,8 @@ STL定义有五个全局函数作用在没有初始化的空间上，其中有�
 注意：这三个函数都是“commit or rollback”，要么一个都不构造，要么全部构造，如果构造到中途产生异常，则之前构造的必须全部析构掉。还有，对uninitialized_copy有两个特化，这两个特化可以用更快的memmove实现。
 
 ## 五.空间配置器小结
+
+空间配置器是什么，就是容器用来开辟空间的工具，为什么要设计空间配置器呢，主要是小型空间会有很多额外的空间记录信息（用malloc分配的时候），所以我们用空间配置器来避免这种情况。
 
 SGI STL空间配置器分为一二级结构，主要是解决小额区块的额外负担问题，大于128字节的交由第一级配置器直接调用malloc或free实现，小于等于128字节交由第二级配置器用freelist和memory pool实现，最后还用了simple_alloc进一步封装以符合STL的接口规范。
 
