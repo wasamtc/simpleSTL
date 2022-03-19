@@ -1,0 +1,5 @@
+# 关联式容器概述
+
+在第四章中我们讨论了序列式容器，所谓序列式容器，感觉主要还是装的线性数据序列，而关联式容器中每个数据（每个元素）都有一个键值和一个实值，当元素被插入到关联式容器中容器内部结构按照键值大小，以某种特定规则将这个元素放置与适当位置。关联式容器的结构主要有两种，一种是RB-tree，一种是hash-table，这两种也都是容器，不过RB-tree不公开，只作为底层容器。
+
+关联式容器的衍生关系主要是set，map由RB-tree衍生，multiset和multimap分别有set和map衍生；hash_set和hash_map有hashtable衍生，hash_multiset和hash_multimap分别有hash_set和hash_map衍生。
