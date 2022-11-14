@@ -61,7 +61,7 @@ PS：其实我还有一个问题，就是怎么调用那个构造和析构函数
 
 freelist的节点结构很特殊，因为freelist总共有16个，每一个的每个区块大小不同，每一个区块应该有一个节点来指向下一个节点，但是如果我们用单纯的指针的话这个空间就浪费了（即只用作指向下一个节点），所以这里节点用了union类型，即可看作指针，在具体分配出去后又可以存储实际的数据。freelist的接口大致如下：
 
-![Screenshot_20220308_191741_com.newskyer.draw](C:\Users\q1369\Documents\Tencent Files\2930848926\FileRecv\MobileFile\Screenshot_20220308_191741_com.newskyer.draw.png)
+![Screenshot_20220308_191741_com.newskyer.draw](https://img-blog.csdnimg.cn/0108424cca3c4bb398f739806195b59f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAd2FzYW10Yw==,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center)
 
 （画得有点丑）
 
